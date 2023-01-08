@@ -78,9 +78,10 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
     return res.status(404).send("User does not exist");
   }
   // delete review by current username
-  const modified_review = books[isbn].reviews[username];
+  const original_review = JSON.stringify(books[isbn].reviews);
   delete books[isbn].reviews[username];
-  return res.status(200).send("Review deleted successfully: " + modified_review);
+  const modified_review = JSON.stringify(books[isbn].reviews);
+  return res.status(200).send("Review deleted successfully\nbefore delete: " + original_review + "\nafter delete: " + modified_review);
 });
 
 module.exports.authenticated = regd_users;
